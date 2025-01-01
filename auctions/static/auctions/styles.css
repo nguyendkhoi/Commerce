@@ -1,0 +1,45 @@
+body {
+    padding: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.creatform {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.input {
+    margin-bottom: 15px;
+}
+
+input[type="submit"] {
+    width: 100px;
+}
+
+.comment:first-of-type {
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.comment:not(:first-of-type) {
+    border-bottom: 1px solid gray;
+}
+
+.auction {
+    background-color: rgb(248, 249, 250);
+}
+
+.grey {
+    background-color: #FFC107;
+    border-radius: 20px;
+    width: 2rem;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

@@ -1,0 +1,83 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <h2>Listing: {{ auction.title }}</h2>
+    {% if not auction.active and is_user_won %}
+        <h3>Congratulations! You have won this auction.</h3>
+    {% endif %}
+    {% if auction.image %}
+        <img src="{{ auction.image.url }}" alt="{{ auction.title }}" />
+    {% endif %}
+        {% if watch_list.exists %}
+        <span class="badge bg-success">
+          On Watchlist
+        </span>
+        {% endif %}
+    <p>{{ auction.description }}</p>
+    <h3>${{ auction.price }}</h3>
+    <span>{{ bid_count }} bid(s) so far. {{ message }}</span>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'place_bid' auction.id %}" method="post">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$0.00</span>
+            </div>
+            <input type="text" name="price" placeholder="Bid" class="form-control" aria-label="Amount (to the nearest dollar)">
+            <input type="submit" class="btn btn-primary btn-sm">
+        </div>
+    </form>
+    {% if watch_list.exists %}
+        <form action="{% url 'remove_watch_list' auction.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary btn-sm">Remove from Watchlist</button>
+        </form>
+    {% else %}
+        <form action="{% url 'add_watch_list' auction.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary btn-sm">Add to Watchlist</button>
+        </form>
+    {% endif %}
+    <h3>Details</h3>
+    <ul>
+        <li>Listed by: {{auction.user}}</li>
+        <li>
+            {% if auction.category %}
+                {{auction.category}}
+            {% else %}
+                No Category Listed
+            {% endif %}
+        </li>
+    </ul>
+    {% if owner %}
+    <form action="{% url 'finish_auction' auction.id %}" method="post" class="mb-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn-sm">End auction</button>
+    </form>
+    {% endif %}
+    <div class="mb-3">
+        <form action="{% url 'add_comment' auction.id %}" method="post">
+            {% csrf_token %}
+            <label for="commnet" class="form-label">Write a Comment</label>
+            <textarea class="form-control mb-1" id="comment" name="comment" rows="3"></textarea>
+            <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+        </form>
+    </div>
+    {% if not comments %}
+        <p>No comment</p>
+    {% else %}
+        {% for comment in comments %}
+            <div class="mb-3 border-bottom comment">
+                <p>user: {{comment.user.username}}</p>
+                <p>{{comment.comment}}</p>
+                <span>Commented at: {{comment.timestamp}}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
