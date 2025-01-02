@@ -1,11 +1,8 @@
-{% extends "auctions/layout.html" %}
+{% extends "auctions/layout.html" %} {% block body %}
+<h2>Create Listings</h2>
 
-{% block body %}
-    <h2>Create Listings</h2>
-
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary btn-sm">Create Listing</button>
-    </form>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="btn btn-primary btn-sm">Create Listing</button>
+</form>
 {% endblock %}

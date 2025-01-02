@@ -1,45 +1,41 @@
-{% extends "auctions/layout.html" %}
+{% extends "auctions/layout.html" %} {% block body %}
+<h2 class="mb-3">{{ title }}</h2>
 
-{% block body %}
-    <h2>{{ title }}</h2>
-
-
-    {% if not lists %}
-        <div>No available auction</div>
-    {% endif %}
-
-    {% if messages %}
-        {% for message in messages %}
-            <div class="{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-    {% for auction in lists %}
-            <div class="auction mb-3">
-                <div class="row">
-                    <div class="col-3">
-                        {% if auction.image %}
-                            <img src="{{ auction.image.url }}" alt="{{ auction.title }}" />
-                        {% endif %}
-                    </div>
-                    <div class="col-9 py-3">
-                        <h3>
-                            <a href="{% url 'list_view' auction.id %}" class="text-decoration-none link-opacity-75-hover">
-                                {{ auction.title }}
-                            </a>
-                            {% if auction.active == False %}
-                                Auction End.
-                            {% endif %}
-                        </h3>
-                        <p><span class="bold">Price: </span>${{ auction.price }}</p>
-                        <p>Description:</p>
-                        {% if auction.description %}
-                            <p>{{ auction.description }}</p>
-                        {% else %}
-                            <p>The user did not provide a description.</p>
-                        {% endif %}
-                        <p>Created {{ auction.date }}</p>
-                    </div>
-                </div>
-            </div>
-    {% endfor %}
-{% endblock %}
+{% if not lists %}
+<div>No available auction</div>
+{% endif %} {% if messages %} {% for message in messages %}
+<div class="{{ message.tags }}">{{ message }}</div>
+{% endfor %} {% endif %} {% for auction in lists %}
+<div class="auction mb-3">
+  <div class="row">
+    <div class="col-3">
+      {% if auction.image %}
+      <img
+        class="image_index"
+        src="{{ auction.image.url }}"
+        alt="{{ auction.title }}"
+      />
+      {% endif %}
+    </div>
+    <div class="col-9 py-3">
+      <h3>
+        <a
+          href="{% url 'list_view' auction.id %}"
+          class="text-decoration-none link-opacity-75-hover"
+        >
+          {{ auction.title }}
+        </a>
+        {% if auction.active == False %} Auction End. {% endif %}
+      </h3>
+      <p><span class="bold">Price: </span>${{ auction.price }}</p>
+      <p>Description:</p>
+      {% if auction.description %}
+      <p>{{ auction.description }}</p>
+      {% else %}
+      <p>The user did not provide a description.</p>
+      {% endif %}
+      <p>Created {{ auction.date }}</p>
+    </div>
+  </div>
+</div>
+{% endfor %} {% endblock %}

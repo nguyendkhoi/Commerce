@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import User, AuctionListings, Bids, Comments
-
 # Register your models here.
 
 admin.site.register(User)
