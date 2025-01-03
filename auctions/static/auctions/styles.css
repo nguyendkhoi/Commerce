@@ -51,7 +51,8 @@ a {
 }
 
 .image_list {
-  object-fit: cover;
+  max-height: 400px;
+  object-fit: contain;
 }
 
 .image-container {
